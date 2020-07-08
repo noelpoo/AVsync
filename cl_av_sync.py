@@ -64,7 +64,7 @@ class AVSync(object):
             width = len(gray)
             assert width > 0, f'frame data missing, frame width = {width}'
             height = len(gray[0])
-            assert height >0, f'frame data missing, frame height = {height}'
+            assert height > 0, f'frame data missing, frame height = {height}'
             ref_point = gray[int(width/2)][int(height/2)]
             dat.append(ref_point)
             i += 1
