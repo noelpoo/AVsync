@@ -1,4 +1,6 @@
 import os
+import stat
+import platform
 import logging
 
 root_dir = os.path.split(os.path.abspath(__file__))[0] + '/'
