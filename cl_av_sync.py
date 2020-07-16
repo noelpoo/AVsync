@@ -73,7 +73,7 @@ class AVSync(object):
     def get_idx_to_time(ref_idx, fps):
         frame_times = []
         for i in ref_idx:
-            time = round(i/fps, 3)
+            time = round(i/fps, 5)
             if time not in frame_times:
                 frame_times.append(time)
         return frame_times
@@ -133,7 +133,7 @@ class AVSync(object):
             if index_list[i] - index_list[i - 1] > SAMPLE_GAP:
                 idx_list.append(index_list[i])
         time_idx = [index_list[0]] + idx_list
-        time_list_sound = [float(i / int(SAMPLE_RATE)) for i in time_idx]
+        time_list_sound = [round(float(i / int(SAMPLE_RATE)), 5) for i in time_idx]
         return time_list_sound
 
 
@@ -143,7 +143,7 @@ def main(video_file, result_name):
     sync.run(video_file)
     end = time.perf_counter()
     time_taken = round(end - start, 3)
-    print(f'time take: {time_taken} seconds')
+    print(f'finished running in {time_taken} seconds')
 
 @click.command()
 @click.option('--file', type=str, help='video file path')
