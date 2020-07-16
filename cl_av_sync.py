@@ -22,6 +22,7 @@ class AVSync(object):
         self.tmp_file_dir = tmp_dir + self.result_name
         self.wav_file = self.tmp_file_dir + '/audio.wav'
         self.json_file = root_dir + self.result_name + '.json'
+        self.events = []
         if not os.path.exists(tmp_dir):
             os.mkdir(tmp_dir)
         if not os.path.exists(self.tmp_file_dir):
@@ -59,8 +60,7 @@ class AVSync(object):
             'average delay': avg_delay
         }
 
-        with open(self.json_file, 'w') as json_file:
-            json.dump(events, json_file)
+        self.events.append(events)
 
     def get_frame_info(self, vid):
         cap = cv.VideoCapture(vid)
@@ -144,6 +144,8 @@ def main(video_file, result_name):
     end = time.perf_counter()
     time_taken = round(end - start, 3)
     print(f'finished running in {time_taken} seconds')
+    with open(sync.json_file, 'w') as json_file:
+        json.dump(sync.events, json_file)
 
 @click.command()
 @click.option('--file', type=str, help='video file path')
