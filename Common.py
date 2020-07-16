@@ -5,6 +5,7 @@ import logging
 
 root_dir = os.path.split(os.path.abspath(__file__))[0] + '/'
 tmp_dir = 'tmp/'
+log_file_name = 'api_monitor.log'
 
 SAMPLE_RATE = 44100
 FRAME_INTERVAL = 50
