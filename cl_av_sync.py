@@ -12,12 +12,14 @@ import json
 import time
 
 from Common import *
+import log
 
 
 class AVSync(object):
     def __init__(self, result_name):
         super(AVSync, self).__init__()
         cur_time = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+        log.set_log_file(log_file_name)
         self.result_name = cur_time + '_' + result_name
         self.tmp_file_dir = tmp_dir + self.result_name
         self.wav_file = self.tmp_file_dir + '/audio.wav'
@@ -42,7 +44,8 @@ class AVSync(object):
         frame_times = self.get_idx_to_time(ref_idx, fps)
         sound_times = self.get_audio_times(video_file)
         count = min(len(frame_times), len(sound_times))
-
+        log.log(f'\nframe_len, sound_len: {len(frame_times)}, {len(sound_times)}')
+        log.log(f'\nraw frame times\nraw sound times:\n{frame_times}\n{sound_times}')
         delays = []
         event_list = []
         for i in range(count):
@@ -68,6 +71,8 @@ class AVSync(object):
         fps = cap.get(cv.CAP_PROP_FPS)
         ref_dat = self.get_frame_ref_point(vid)
         ref_idx = self.get_peaks(ref_dat)
+        log.log(f'\nref_dat:\n {ref_dat}')
+        log.log(f'\nref_idx:\n{ref_idx}')
         return ref_idx, fps
 
     @staticmethod
@@ -134,11 +139,14 @@ class AVSync(object):
             if index_list[i] - index_list[i - 1] > SAMPLE_GAP:
                 idx_list.append(index_list[i])
         time_idx = [index_list[0]] + idx_list
+        log.log(f'\ntime idx:\n{time_idx}')
         time_list_sound = [round(float(i / int(SAMPLE_RATE)), 5) for i in time_idx]
         return time_list_sound
 
 
 def main(video_file, result_name):
+    if os.path.exists(log_file_name):
+        os.remove(log_file_name)
     sync = AVSync(result_name)
     start = time.perf_counter()
     sync.run(video_file)
