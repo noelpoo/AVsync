@@ -57,7 +57,7 @@ class AVSync(object):
             }
             delays.append(delay)
             event_list.append(event)
-            avg_delay = np.mean(delays)
+        avg_delay = np.mean(delays)
 
         events = {
             'event list': event_list,
