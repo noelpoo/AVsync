@@ -8,6 +8,4 @@
 # Use case
 #### integration with RTMP push, HLS playback, Jenkins reporting
 ##### automate everything!
-\n
-\n
 ##### pls donate for more scripts
