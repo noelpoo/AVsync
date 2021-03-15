@@ -92,6 +92,7 @@ class AVSync(object):
         i = 1
         while i <= frame_count:
             _, frame = cap.read()
+
             gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
             width = len(gray_frame)
             assert width > 0, 'frame width is 0'
